@@ -1,4 +1,6 @@
-# template for CIT 3606
-Use this template to make your repo holding all the labs for this class
+# CIT 3606
+## Welcome to Junior Year
 
-Change this readme text to your name and class
+### Christopher Maldonado - Advanced Web Programming
+
+
