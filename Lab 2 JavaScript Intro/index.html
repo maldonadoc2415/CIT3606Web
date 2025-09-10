@@ -6,7 +6,21 @@
         <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <script>
-        
+        var today = new Date();
+        today.getHours() && today.getMinutes;
+        if (today.getHours() < 12) {
+            alert("Good Morning!");
+        } else if (today.getHours() < 18) {
+            alert("Good Afternoon!");
+        } else {
+            alert("Good Evening!");
+        }
+        alert("The current hour is: " + today.getHours()+":" + today.getMinutes());
+
+        var USDollars = prompt("Enter an amount in US Dollars: ");
+        var INDORupiah = USDollars * 16437;
+        alert("$" + USDollars + " is equal to " + INDORupiah + " in Indonesian Rupiah.");
+
     </script>
     <body>
       
