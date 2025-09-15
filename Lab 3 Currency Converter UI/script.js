@@ -1,3 +1,9 @@
 function Hello1() { 
-    alert('You have clicked Button 1!');
+    Name = document.getElementById("username").value;
+    alert('Hello, ' + Name +'!');
+}
+
+function Goodbye(){
+    Name = document.getElementById("username").value;
+    alert('Goodbye, ' + Name +'!');
 }
