@@ -30,3 +30,38 @@
     cursor: pointer;
 
 }
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #8b89899f;
+}
+
+
+h1 {
+    text-align: center;
+    color: rgb(5, 1, 1);
+}
+
+button {
+    border-radius: 12px;
+    box-shadow: 0 9px #999;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    align-items: center;
+}
+
+div {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 50px;
+    ;
+} 
+
+p {
+    text-align: center;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
