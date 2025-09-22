@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <title>CIT 3606 Lab 4</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+      <h1 id="myH1">Chris' In class page</h1>
+      
+     <!-- The JavaScript code is attached at the bottom of the page
+           after the page is completely loaded. Write your code in script.js. -->
+     <script>
+     const myH1 = document.getElementById("myH1");
+     myH1.onmouseover = function() {
+         myH1.style.color = "royalblue";
+         myH1.textContent = "Hovering!";
+         myH1.style.font = "italic bold 40px arial,serif";
+         myH1.style.backgroundColor = "lightgrey";
+         myH1.style.border = "5px solid black";
+         myH1.style.fontWeight = "bold";
+
+     }
+        myH1.onmouseout = function() {
+            myH1.style.color = "black";
+            myH1.textContent = "Chris' In class page";
+            myH1.style.font = "normal 30px arial,serif";
+            myH1.style.backgroundColor = "white";
+            myH1.style.border = "none";
+            
+    
+        }
+    
+
+
+     </script> 
+    </body>
+</html>
