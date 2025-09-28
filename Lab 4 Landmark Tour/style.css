@@ -32,5 +32,15 @@
       font: bold 20px Arial, sans-serif;
       color: #0c0b0bda;
     }
-
+.description {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 800px;
+  text-align: left;
+  background-color:#8da6d3bd ;
+  font-family: 'Times New Roman', Times, serif;
+    
+   
+ 
+}
   
