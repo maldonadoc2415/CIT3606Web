@@ -6,13 +6,53 @@
         <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
+        <canvas id="myCanvas" width="480" height="320"
+        style="border:1px solid #0f0101;">
+        
+
       
       
 
-        <script src="script.js"></script> 
+        <script >
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "blue"
+        ctx.fillRect(20, 20, 150, 100);
+        const myImg = new Image();
+        myImg.src = 'EG.png'
+        myImg.onload = function() {
+            ctx.drawImage(myImg, 200, 20, 150, 100);
+        }
+        myCanvas.onmousedown = function(event) {
+
+            const rect = canvas.getBoundingClientRect();
+            /* Get the coordinates of the click relative to the canvas */
+
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            alert("You clicked at " + x + ", " + y);
+            
+        }
+            setInterval(drawFunction,100);
+            /* Animation moves the image down and to the right */
+            let
+        
+            x = 10;
+            y = 10;
+            function drawFunction() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                x++;
+                y++;
+                ctx.drawImage(myImg, x, y, 100, 100);
+
+            }
+
+          
+
+        </script> 
     </body>
-        <canvas id="myCanvas" width="480" height="320"
-        style="border:1px solid #0f0101;">
+        
+
             
         </canvas>
 </html>
