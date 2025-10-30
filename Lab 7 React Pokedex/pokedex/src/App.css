@@ -51,8 +51,17 @@
 }
 
 .App-p{
-  font-size: 11.5px;
+  font-size: 11px;
   color: #ffffff;
+  font-weight: bold
   ;
 
 }
+.Pokedex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-wrap: wrap;
+  
+}
+
