@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import useState from 'react';
+
+
 const pokemon = [
     {
         mon: "Pikachu",
@@ -46,7 +49,7 @@ function App() {
                     <img src={poke.img} alt={poke.mon} />
                     <li><strong>Type:</strong> {poke.type}</li>
                     <li><strong>ID:</strong> {poke.id}</li>
-                    
+                    <p className="App-p">{poke.summary}</p>
                 </div>
             ))}
         </div>
