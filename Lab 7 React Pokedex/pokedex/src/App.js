@@ -54,6 +54,8 @@ function PokemonGrabber() {
       .catch(err => {
         console.error(err);
         setImage(""); 
+
+        
       });
   };
 
