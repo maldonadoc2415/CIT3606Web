@@ -31,6 +31,29 @@ conn.connect((err) => {           // can move this into app.get and send
 
   console.log("Connected!");
 });
+const sql = 'SELECT * FROM users';
+  conn.query(sql, function (err, result) {
+    if (err) throw err;
+
+    console.log(result);
+  });
+const createTableSql = `
+    CREATE TABLE IF NOT EXISTS users (
+      id INT NOT NULL AUTO_INCREMENT,
+      username VARCHAR(100) NOT NULL,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id)
+    );
+  `;
+conn.query(createTableSql, (err, result) => {
+    if (err) {
+      console.error("ERROR CREATING TABLE:", err);
+      return;
+    }
+    console.log("Table 'users' is ready.");
+  });
+  // --- End of new code ---
 app.use(express.urlencoded({ extended: true }));
 
 
@@ -39,8 +62,13 @@ app.get('/', function(req, res){
 
 
 });
+
+
 app.get('/new', function(req, res){
    res.sendFile(__dirname + '/new.html');
+});
+app.get('/forgot', function(req, res){
+   res.sendFile(__dirname + '/forgot.html');
 });
 app.post('/submit', function(req, res){
   const sql = 'SELECT * FROM students WHERE firstname =? OR lastname = ?';
@@ -52,18 +80,49 @@ app.post('/submit', function(req, res){
                res.send(result);
    }  }  );
 }); 
+
+
 app.post('/insert', function(req, res){
-  const sql = 'INSERT into students WHERE firstname =? OR lastname = ?';
-  console.log("Form contents: " + req.body.firstname + req.body.lastname);
-  conn.query(sql, [req.body.firstname,req.body.lastname], function (err, result) {
-    if (err) throw err;
-    if (result.length == 0)  { res.send("no result"); }
-    else {  console.log(result);
-               res.send(result);
-   }  }  );
-}); 
+  const sql = 'INSERT into users (username, email) VALUES (?, ?)';
+  console.log("Form contents: " + req.body.username + req.body.email);
+  
+  conn.query(sql, [req.body.username, req.body.email], function (err, result) {
+    if (err) {
+        console.error("Error inserting data:", err);
+        res.send("Error inserting data.");
+        return; 
+    }
+    console.log(result);
+    res.send("User added successfully!");
+  });
+});
 
-
+// 2. Add a POST route to handle the password lookup
+app.post('/get-password', function(req, res){
+  // We will select the password based on the email from the form
+  const sql = 'SELECT password FROM users WHERE email = ?';
+  
+  console.log("Looking up password for: " + req.body.email);
+  
+  conn.query(sql, [req.body.email], function (err, result) {
+    if (err) {
+        console.error("Error looking up password:", err);
+        res.send("An error occurred.");
+        return;
+    }
+    
+    // Check if any user was found
+    if (result.length == 0)  { 
+        res.send("No account found with that email."); 
+    }
+    else {  
+        // Found the user. Send back their password.
+        // THIS IS THE INSECURE PART
+        console.log(result);
+        res.send("Your password is: " + result[0].password);
+   }  
+  });
+});
 
 
 
