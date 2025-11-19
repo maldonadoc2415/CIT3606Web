@@ -30,6 +30,7 @@ conn.connect((err) => {           // can move this into app.get and send
   });
 
   console.log("Connected!");
+
 });
 const sql = 'SELECT * FROM users';
 conn.query(sql, function (err, result) {
