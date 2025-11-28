@@ -20,6 +20,7 @@ intents.members = True
 
 # Create bot instance
 bot = commands.Bot(command_prefix='!', intents=intents)
+
 # Message event
 @bot.event
 async def on_message(message):
@@ -31,7 +32,8 @@ async def on_message(message):
 
     await bot.process_commands(message)
 # Command to fetch NBA player stats-----------------------------------------------------------
-def get_player_season_averages(player_name: str, season: str = "2024-25"):
+
+def get_player_season_averages(player_name: str, season: str = "2025-26"):
     # Step 1: Find the player
     results = players.find_players_by_full_name(player_name)
     if not results:
@@ -45,7 +47,7 @@ def get_player_season_averages(player_name: str, season: str = "2024-25"):
     stats_df = career.get_data_frames()[0]
 
     # Step 3: Filter for the requested season
-    season_stats = stats_df[stats_df["SEASON_ID"] == f"2{season.replace('-', '')}"]
+    season_stats = stats_df[stats_df["SEASON_ID"] == season]
 
     if season_stats.empty:
         return None, "No stats for this season."
@@ -59,10 +61,10 @@ def get_player_season_averages(player_name: str, season: str = "2024-25"):
     return {
         "player_name": player["full_name"],
         "team_name": team_info["full_name"] if team_info else "Unknown Team",
-        "ppg": stats["PTS"],
-        "rpg": stats["REB"],
-        "apg": stats["AST"],
-        "mpg": stats["MIN"],
+        "ppg": stats["PTS"]/stats["GP"],
+        "rpg": stats["REB"]/stats["GP"],
+        "apg": stats["AST"]/stats["GP"],
+        "mpg": stats["MIN"]/stats["GP"],
         "games_played": stats["GP"]
     }, None
 
@@ -87,9 +89,7 @@ async def stats(ctx, *, player_name):
 
 
 
-@bot.event
-async def on_ready():
-    print(f'We have logged in as {bot.user}')
+
 
 bot.run(token,log_handler=handler, log_level=logging.DEBUG)
 
@@ -99,7 +99,7 @@ bot.run(token,log_handler=handler, log_level=logging.DEBUG)
 
 
 # To Do List:
-# 1. Implement commands to fetch NBA stats
+# 1. Implement commands to fetch NBA stats - completed, needs a bit more testing
 # 2. Handle errors and exceptions
 # 3. Add more features as needed
 # 4. Test the bot thoroughly
