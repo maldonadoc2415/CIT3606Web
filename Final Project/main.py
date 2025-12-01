@@ -36,6 +36,7 @@ async def on_message(message):
 def get_player_season_averages(player_name: str, season: str = "2025-26"):
     # Step 1: Find the player
     results = players.find_players_by_full_name(player_name)
+
     if not results:
         return None, "Player not found."
 
@@ -64,7 +65,13 @@ def get_player_season_averages(player_name: str, season: str = "2025-26"):
         "ppg": stats["PTS"]/stats["GP"],
         "rpg": stats["REB"]/stats["GP"],
         "apg": stats["AST"]/stats["GP"],
+        "bpg": stats["BLK"]/stats["GP"],
+        "spg": stats["STL"]/stats["GP"],
         "mpg": stats["MIN"]/stats["GP"],
+        "fg_percentage": stats["FG_PCT"]*100,
+        "three_pt_percentage": stats["FG3_PCT"]*100,
+        "free_throw_percentage": stats["FT_PCT"]*100,
+
         "games_played": stats["GP"]
     }, None
 
@@ -77,11 +84,16 @@ async def stats(ctx, *, player_name):
         return
 
     msg = (
-        f"**{data['player_name']}** — *{data['team_name']}*\n"
+        f"**Stats : {data['player_name']}** — *{data['team_name']}*\n"
         f"PPG: {data['ppg']:.1f}\n"
         f"RPG: {data['rpg']:.1f}\n"
         f"APG: {data['apg']:.1f}\n"
         f"MPG: {data['mpg']:.1f}\n"
+        f"FG%: {data['fg_percentage']:.1f}\n"
+        f"3PT%: {data['three_pt_percentage']:.1f}\n"
+        f"FT%: {data['free_throw_percentage']:.1f}\n"
+        f"BPG: {data['bpg']:.1f}\n"
+        f"SPG: {data['spg']:.1f}\n"
         f"Games Played: {data['games_played']}"
     )
 
@@ -99,7 +111,7 @@ bot.run(token,log_handler=handler, log_level=logging.DEBUG)
 
 
 # To Do List:
-# 1. Implement commands to fetch NBA stats - completed, needs a bit more testing
+# 1. Implement commands to fetch NBA stats -overall stats for players done, adding at least 2 more features.
 # 2. Handle errors and exceptions
 # 3. Add more features as needed
 # 4. Test the bot thoroughly
