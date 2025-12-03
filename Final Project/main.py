@@ -81,22 +81,23 @@ async def stats(ctx, *, player_name):
     if error:
         await ctx.send(error)
         return
+    # Create a display for player stats
+    embedp = discord.Embed(
+        title=f"{data['player_name']} | {data['team_name']}",
+        description=f"**Stats for 2025-26 Season**",
+        color=0xE03A3E)
+    embedp.add_field(name="Points Per Game", value=f"{data['ppg']:.1f}", inline=True)
+    embedp.add_field(name="Rebounds Per Game", value=f"{data['rpg']:.1f}", inline=True)
+    embedp.add_field(name="Assists Per Game", value=f"{data['apg']:.1f}", inline=True)
+    embedp.add_field(name="Blocks Per Game", value=f"{data['bpg']:.1f}", inline=True)
+    embedp.add_field(name="Steals Per Game", value=f"{data['spg']:.1f}", inline=True)
+    embedp.add_field(name="Minutes Per Game", value=f"{data['mpg']:.1f}", inline=True)
+    embedp.add_field(name="Field Goal %", value=f"{data['fg_percentage']:.1f}%", inline=True)
+    embedp.add_field(name="3-Point %", value=f"{data['three_pt_percentage']:.1f}%", inline=True)
+    embedp.add_field(name="Free Throw %", value=f"{data['free_throw_percentage']:.1f}%", inline=True)
+    embedp.add_field(name="Games Played", value=f"{data['games_played']}", inline=True)
 
-    msg = (
-        f"**Stats : {data['player_name']}** — *{data['team_name']}*\n"
-        f"PPG: {data['ppg']:.1f}\n"
-        f"RPG: {data['rpg']:.1f}\n"
-        f"APG: {data['apg']:.1f}\n"
-        f"MPG: {data['mpg']:.1f}\n"
-        f"FG%: {data['fg_percentage']:.1f}\n"
-        f"3PT%: {data['three_pt_percentage']:.1f}\n"
-        f"FT%: {data['free_throw_percentage']:.1f}\n"
-        f"BPG: {data['bpg']:.1f}\n"
-        f"SPG: {data['spg']:.1f}\n"
-        f"Games Played: {data['games_played']}"
-    )
-
-    await ctx.send(msg)
+    await ctx.send(embed=embedp)
 
 from nba_api.stats.endpoints import teamyearbyyearstats
 
@@ -108,21 +109,18 @@ def get_team_stats(search_term: str):
     
     # Normalize search term to lowercase
     search = search_term.lower()
-
     for team in nba_teams:
         if (search in team['full_name'].lower() or 
             search in team['city'].lower() or 
             search == team['abbreviation'].lower()):
             found_team = team
             break
-    
     if not found_team:
         return None, f"Could not find a team matching '{search_term}'."
 
     team_id = found_team['id']
 
     # Step 2: Pull all related stats using the Team ID
-    # TeamYearByYearStats requires a team_id
     stats_endpoint = teamyearbyyearstats.TeamYearByYearStats(team_id=team_id)
     stats_df = stats_endpoint.get_data_frames()[0]
 
@@ -142,8 +140,8 @@ def get_team_stats(search_term: str):
         "wins": data["WINS"],
         "losses": data["LOSSES"],
         "win_pct": data["WIN_PCT"],
-        "conf_rank": data["CONF_RANK"], # Conference Rank
-        "ppg": data["PTS_RANK"],        # Points per game rank (or raw PTS if preferred)
+        "conf_rank": data["CONF_RANK"], 
+        "ppg": data["PTS_RANK"],        
         "gp": data["GP"]
     }, None
 
@@ -160,19 +158,12 @@ async def teamstats(ctx, *, team_search):
     embed = discord.Embed(
         title=f"{data['team_name']} | {data['season']}",
         description=f"**Record:** {data['wins']}-{data['losses']} ({data['win_pct']:.3f})",
-        color=0x1D428A
-    )
-
+        color=0x1D428A)
     embed.add_field(name="Conference Rank", value=f"#{data['conf_rank']}", inline=True)
     embed.add_field(name="Games Played", value=f"{data['gp']}", inline=True)
     embed.add_field(name="Points Per Game", value=f"#{data['ppg']}", inline=True)
     
-    
     await ctx.send(embed=embed)
 
-
-
-bot.run(token,log_handler=handler, log_level=logging.DEBUG)
-
-
-
+# Run the bot
+bot.run(token, log_handler=handler, log_level=logging.DEBUG)
