@@ -1,5 +1,6 @@
 # Final Project main.py - NBA Stats Discord Bot
 
+# !hello - Greets the user
 # !stats - Fetches and displays NBA player statistics for the current season
 # !teamstats - Fetches and displays NBA team statistics for the current season
 
