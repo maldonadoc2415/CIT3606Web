@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 import os
 from nba_api.stats.static import players, teams
 from nba_api.stats.endpoints import playercareerstats
+from nba_api.stats.endpoints import teamyearbyyearstats
 
 # Set up logging
 load_dotenv()
@@ -99,8 +100,6 @@ async def stats(ctx, *, player_name):
     embedp.add_field(name="Games Played", value=f"{data['games_played']}", inline=True)
 
     await ctx.send(embed=embedp)
-
-from nba_api.stats.endpoints import teamyearbyyearstats
 
 # Function to gather team stats based on a string
 def get_team_stats(search_term: str):
