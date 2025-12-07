@@ -35,6 +35,7 @@ async def on_message(message):
         await message.channel.send('Hello! I am your NBA Stats Bot. How can I assist you today?')
 
     await bot.process_commands(message)
+
 # Command to fetch NBA player stats
 def get_player_season_averages(player_name: str, season: str = "2025-26"):
     # Step 1: Find the player
@@ -132,7 +133,7 @@ def get_team_stats(search_term: str):
         return None, f"No stats found for {found_team['full_name']} in {current_season}."
     data = season_stats.iloc[0]
 
-    # Step 4: Return a dictionary of the specific stats we want
+    # Step 4: Return a dictionary of the specific stats
     return {
         "team_name": found_team['full_name'],
         "team_id": team_id,
@@ -145,7 +146,7 @@ def get_team_stats(search_term: str):
         "gp": data["GP"]
     }, None
 
-# Command to post all those stats
+# Command to post stats
 @bot.command()
 async def teamstats(ctx, *, team_search):
     data, error = get_team_stats(team_search)
@@ -162,7 +163,6 @@ async def teamstats(ctx, *, team_search):
     embedt.add_field(name="Conference Rank", value=f"#{data['conf_rank']}", inline=True)
     embedt.add_field(name="Games Played", value=f"{data['gp']}", inline=True)
     embedt.add_field(name="Points Per Game", value=f"#{data['ppg']}", inline=True)
-    
     await ctx.send(embed=embedt)
 
 # Run the bot
