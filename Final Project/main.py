@@ -155,15 +155,15 @@ async def teamstats(ctx, *, team_search):
         return
 
     # Create the display
-    embed = discord.Embed(
+    embedt = discord.Embed(
         title=f"{data['team_name']} | {data['season']}",
         description=f"**Record:** {data['wins']}-{data['losses']} ({data['win_pct']:.3f})",
         color=0x1D428A)
-    embed.add_field(name="Conference Rank", value=f"#{data['conf_rank']}", inline=True)
-    embed.add_field(name="Games Played", value=f"{data['gp']}", inline=True)
-    embed.add_field(name="Points Per Game", value=f"#{data['ppg']}", inline=True)
+    embedt.add_field(name="Conference Rank", value=f"#{data['conf_rank']}", inline=True)
+    embedt.add_field(name="Games Played", value=f"{data['gp']}", inline=True)
+    embedt.add_field(name="Points Per Game", value=f"#{data['ppg']}", inline=True)
     
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embedt)
 
 # Run the bot
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
